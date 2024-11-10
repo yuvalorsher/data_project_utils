@@ -1,3 +1,5 @@
+DATA_PATH = 'datasets/'
+
 # Conversion for frequency shorthand to x-axis title
 FREQ_SHORT_TO_FULL = dict(
             D = 'Day',
