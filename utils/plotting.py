@@ -91,6 +91,26 @@ def plot_temporal_distribution(dates: pd.Series, freq: str) -> tuple[plt.Figure,
     return fig, ax
 
 
+# def _get_period_start_times_from_series(
+#     s: pd.Series,
+# ) -> pd.Series:
+#     return s.dt.start_time.dt.date
+
+# def _get_period_start_times_from_period_index(
+#     ind: pd.PeriodIndex,
+# ) -> pd.Series:
+#     return _get_period_start_times_from_series(ind.to_series())
+
+# # def plot_temporal_distribution(dates: pd.Series, freq: str) -> tuple[plt.Figure, plt.Axes]:
+# #     """
+# #     Plots the number of observations distirbution per frequency (month, quarter, year, etc.).
+# #     freq may be any of the frequencies allowed by pd's to_period(freq).
+# #     """
+# #     fig, ax = plt.subplots()
+# #     dates.dt.to_period(freq=freq).dt.start_time.dt.date.value_counts().sort_index().plot.bar(ax=ax)
+# #     ax.set_xlabel(FREQ_SHORT_TO_FULL.get(freq, freq))
+# #     return fig, ax
+
 # def plot_temporal_distribution(dates: pd.Series, freq: str) -> tuple[plt.Figure, plt.Axes]:
 #     """
 #     Plots the number of observations distirbution per frequency (month, quarter, year, etc.).
@@ -99,9 +119,10 @@ def plot_temporal_distribution(dates: pd.Series, freq: str) -> tuple[plt.Figure,
 #     fig, ax = plt.subplots()
 #     counts_per_period = dates.dt.to_period(freq=freq).value_counts().sort_index()
 #     counts_per_period_full = add_missing_periods(counts_per_period, freq).fillna(0)
-#     x = counts_per_period_full.index.dt.start_time.dt.date
-#     y = counts_per_period_full.values
-#     plt.plot.bar(x=x, y=y, ax=ax)
+#     x = _get_period_start_times_from_period_index(counts_per_period_full.index).values
+#     y = counts_per_period_full.values.flatten()
+#     print(y)
+#     ax.bar(x, y)
 #     ax.set_xlabel(FREQ_SHORT_TO_FULL.get(freq, freq))
 #     return fig, ax
 

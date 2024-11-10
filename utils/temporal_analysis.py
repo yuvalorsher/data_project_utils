@@ -136,7 +136,7 @@ def disp_nans_over_time(
         columns: list[str] | pd.Index | None = None,
         freq: str | None = None,
         axis: int | None = 0,
-) -> pd.io.formats.style.Styler:
+):
     """
     Aggregates the NaN rate per period per column in columns.
     Return a Styler object in which columns are sorted by max NaN rate.
