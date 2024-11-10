@@ -1,5 +1,5 @@
 import pandas as pd
-from consts import VALUES_COL_KEY, GROUPBY_COL_KEY, LABEL_ENCODED_POSTFIX, TARGET_ENCODED_POSTFIX
+from utils.consts import VALUES_COL_KEY, GROUPBY_COL_KEY, LABEL_ENCODED_POSTFIX, TARGET_ENCODED_POSTFIX
 from utils.general import copy_if_not_inplace
 from sklearn.preprocessing import LabelEncoder
 

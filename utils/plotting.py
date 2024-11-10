@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from seaborn import PairGrid
-from consts import FREQ_SHORT_TO_FULL
+from utils.consts import FREQ_SHORT_TO_FULL
 
 
 def calc_nrows_from_ncols(nplots: int, ncols: int = 3, nrows: int | None = None) -> int:
