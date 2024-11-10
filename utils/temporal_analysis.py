@@ -1,3 +1,10 @@
+import pandas as pd
+from typing import Callable
+
+from matplotlib import pyplot as plt
+
+from utils.general import make_list_if_single_item
+
 AGG_COL = 'price'
 DATE_COL = 'datesold'
 DEFAULT_FREQ = 'M'
@@ -41,7 +48,7 @@ def agg_over_time(
         agg_col: str,
         date_col: str,
         freq: str | None = None,
-        agg_func: str | Callable[pd.Series, int] = 'mean',
+        agg_func: str | Callable[[pd.Series], int] = 'mean',
         is_add_missing_periods: bool = True,
 ) -> pd.Series:
     """
@@ -63,8 +70,8 @@ def agg_multiple_cols_over_time(
         date_col: str,
         agg_cols: list[str],
         freq: str | None = None,
-        agg_func: str | Callable[pd.Series, int] = 'mean',
-) -> plt.Axes:
+        agg_func: str | Callable[[pd.Series], int] = 'mean',
+) -> pd.DataFrame:
     """
     Applies agg_over_time on multiple columns and concatenates into a DF.
     """
@@ -103,7 +110,7 @@ def agg_over_time_per_group(
         agg_col: str,
         groupby_cols: str | list[str],
         freq: str | None = None,
-        agg_func: str | Callable[pd.Series, int] = 'mean',
+        agg_func: str | Callable[[pd.Series], int] = 'mean',
 ) -> pd.DataFrame:
     """
     Aggregates agg_col over time periods defined by date_col and per groups in groupby_col, and returns the time series per period.
@@ -144,7 +151,7 @@ def plot_trends(
         date_col: str,
         trend_cols: str | list[str],
         freq: str | None = None,
-        agg_func: str | Callable[pd.Series, int] = 'mean',
+        agg_func: str | Callable[[pd.Series], int] = 'mean',
         ax: plt.Axes | None = None,
         figsize: tuple[int, int] | None = None,
 ) -> plt.Axes:

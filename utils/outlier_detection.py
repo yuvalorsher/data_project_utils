@@ -1,4 +1,9 @@
-def assert_numerical(df: pd.DataFrame) -> None:
+import numpy as np
+import pandas as pd
+from scipy.stats import zscore
+
+
+def _assert_numerical(df: pd.DataFrame) -> None:
     """
     Assert that all columns in df are numerical
     """
@@ -10,7 +15,7 @@ def get_max_zscore(df: pd.DataFrame) -> pd.Series:
     """
     Get maximal absolute zscore per column in df.
     """
-    assert_numerical(df)
+    _assert_numerical(df)
     zscored = df.apply(lambda s: zscore(s.dropna()))
     return zscored.abs().max()
 

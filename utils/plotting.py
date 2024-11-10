@@ -1,3 +1,11 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from seaborn import PairGrid
+from consts import FREQ_SHORT_TO_FULL
+
+
 def calc_nrows_from_ncols(nplots: int, ncols: int = 3, nrows: int | None = None) -> int:
     """
     Calculate how many rows are needed in a subplot, given nplots and desired ncols.
@@ -8,10 +16,14 @@ def calc_nrows_from_ncols(nplots: int, ncols: int = 3, nrows: int | None = None)
     return nrows
 
 
-def create_subplots(nplots: int, nrows: int, ncols: int, figsize: tuple[int, int] | None = None) -> tuple[
-    plt.Figure, np.ndarray[plt.Axes]]:
+def create_subplots(
+        nplots: int,
+        nrows: int,
+        ncols: int,
+        figsize: tuple[int, int] | None = None
+) -> tuple[plt.Figure, np.ndarray[plt.Axes]]:
     """
-    Some boiler plate code for plotting multiple EDA plots
+    Some boiler-plate code for plotting multiple EDA plots
     """
     assert nplots > 0 and ncols > 0, f"nplots and ncols must be a positive integers. Values are nplots={nplots}, ncols={ncols}"
     nrows = calc_nrows_from_ncols(nplots=nplots, ncols=ncols, nrows=nrows)
@@ -99,7 +111,7 @@ def plot_scatter_matrix(
         exclude_cols: list[str] | None = None,
         # figsize: tuple[int, int] | None = None,
         alpha: float = 0.1,
-) -> np.ndarray:
+) -> PairGrid:
     include_cols = df.columns if include_cols is None else include_cols
     exclude_cols = [] if exclude_cols is None else exclude_cols
     # ncols = len(include_cols) - len(exclude_cols)

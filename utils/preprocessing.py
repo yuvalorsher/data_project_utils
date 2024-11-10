@@ -1,10 +1,16 @@
-### Missing values imputation
+import pandas as pd
+from consts import VALUES_COL_KEY, GROUPBY_COL_KEY, LABEL_ENCODED_POSTFIX, TARGET_ENCODED_POSTFIX
+from utils.general import copy_if_not_inplace
+from sklearn.preprocessing import LabelEncoder
+
+
+# Missing values imputation
 def impute_cols(
     df: pd.DataFrame,
     impute_col: str,
     values_col: str,
     groupby_cols: list[str] | pd.Index | None = None,
-):
+) -> pd.Series:
     """
     Impute missing values in impute_col by the mean of values_col. If groupby_cols is not empty, returns the mean per group.
     """
@@ -13,10 +19,12 @@ def impute_cols(
     else:
         return df[impute_col].fillna(df[values_col].mean())
 
-def impute_by_group_mean(df: pd.DataFrame,
-                        impute_col_by_groupby: dict,
-                        inplace: bool = False,
-                        ) -> pd.DataFrame:
+
+def impute_by_group_mean(
+        df: pd.DataFrame,
+        impute_col_by_groupby: dict,
+        inplace: bool = False,
+) -> pd.DataFrame:
     """
     Imputes columns defined in impute_col_by_groupby's keys, according to the dictionary defined in their values.
     #TODO: Lose redundant functionality allowing calculating the mean from a different col from the one that's being imputed. i.e. dict should only be {'col1': ['col2', 'col3']}
@@ -38,8 +46,8 @@ def impute_by_group_mean(df: pd.DataFrame,
     if not inplace:
         return df
 
-    ### Encodings
 
+# Encodings
 def one_hot_encode(
         df: pd.DataFrame,
         col_encoding: dict,
@@ -60,6 +68,7 @@ def one_hot_encode(
     encodings = pd.concat([pd.get_dummies(df[column], **args) for column, args in col_encoding.items()], axis=1)
     return pd.concat([df[none_encoded_cols], df[original_cols_to_keep], encodings], axis=1)
 
+
 def label_encode(
         df: pd.DataFrame,
         col_encoding: dict,
@@ -79,6 +88,7 @@ def label_encode(
         df.loc[~missing, f'{column}{encoded_postfix}'] = label_encoder.transform(df.loc[~missing, column])
     return df
 
+
 def target_endode(
         df: pd.DataFrame,
         col_encodings: dict,
@@ -94,6 +104,7 @@ def target_endode(
     for cat_col, encoding in col_encodings.items():
         df[f'{cat_col}{encoded_postfix}'] = df[cat_col].map(encoding)
     return df
+
 
 def target_encode_train(
         df: pd.DataFrame,
