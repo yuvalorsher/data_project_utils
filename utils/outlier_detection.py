@@ -27,6 +27,7 @@ def sort_cols_by_max_zscore(df):
 
 
 def get_cols_w_outliers(df, outlier_zscore: float = 4, exclude: list[str] = None):
+    exclude = [] if exclude is None else exclude
     max_abs_zscore = get_max_zscore(df.drop(columns=exclude))
     outlier_cols = max_abs_zscore[lambda s: s > outlier_zscore].index
     return df[outlier_cols]
